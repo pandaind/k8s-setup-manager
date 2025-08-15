@@ -225,6 +225,7 @@ k8s backup-namespace development
 When you run `k8s create-dev-env`, you get:
 
 ### **Database Services**
+
 - **PostgreSQL**: Full-featured database
   - Host: `postgres:5432`
   - Database: `devdb`
@@ -232,12 +233,88 @@ When you run `k8s create-dev-env`, you get:
   - Password: `devpass`
 
 ### **Caching & Storage**
+
 - **Redis**: In-memory cache and session store
   - Host: `redis:6379`
 - **MinIO**: S3-compatible object storage
   - API: `minio:9000`
   - Console: `http://$(minikube ip):32001`
   - Credentials: `minioadmin:minioadmin`
+
+------
+
+## 🆕 Extended Messaging & Vector/AI Database Environments
+
+### **Messaging Systems**
+
+✅ **RabbitMQ** with Management Console
+
+- **AMQP**: `rabbitmq:5672`
+- **Management UI**: `http://$(minikube ip):32672`
+- **User**: `admin`
+- **Password**: `password123`
+
+✅ **ActiveMQ** with Web Console
+
+- **OpenWire**: `activemq:61616`
+- **Web Console**: `http://$(minikube ip):32161`
+- **User**: `admin`
+- **Password**: `password123`
+
+------
+
+### **Vector & Advanced Databases for AI/ML**
+
+Command:
+
+```bash
+k8s create-vector-env [namespace]
+```
+
+Deploys a complete **AI/ML-ready vector database stack**:
+
+✅ **Weaviate** – Vector database for AI applications
+
+- Host: `weaviate:8080`
+- Web UI: `http://$(minikube ip):32080`
+- Features: `text2vec`, transformers support
+
+✅ **Chroma** – Embedding database
+
+- Host: `chroma:8000`
+- Persistent storage enabled
+
+✅ **Qdrant** – High-performance vector database
+
+- HTTP API: `qdrant:6333`
+- gRPC: `qdrant:6334`
+- Web UI: `http://$(minikube ip):32333`
+
+✅ **Elasticsearch** – Search & analytics engine
+
+- Host: `elasticsearch:9200`
+- Web Interface: `http://$(minikube ip):32200`
+- Security disabled for development
+
+------
+
+### 📊 **Environment Setup Commands**
+
+```bash
+# Basic development stack
+k8s create-dev-env development        # Redis, PostgreSQL, MinIO
+
+# Extended database stack
+k8s create-database-env databases     # MongoDB, MySQL, Cassandra, Neo4j
+
+# Messaging systems
+k8s create-messaging-env messaging    # Kafka, RabbitMQ, ActiveMQ
+
+# AI/ML vector database stack
+k8s create-vector-env vectordb        # Weaviate, Chroma, Qdrant, Elasticsearch
+```
+
+------
 
 ## 📊 Monitoring & Observability
 
@@ -326,35 +403,61 @@ k8s create-network-policies development
 k8s create-tls-ingress secure-app secure.local webapp-service:80 development
 ```
 
-## 📊 Commands Reference
+## 📊 Commands *Reference*
 
-| Category | Command | Description | Example |
-|----------|---------|-------------|---------|
-| **Setup** | `install` | Install all prerequisites | `k8s install` |
-| | `start` | Start cluster | `k8s start` |
-| | `stop` | Stop cluster | `k8s stop` |
-| | `status` | Show cluster status | `k8s status` |
-| **Development** | `create-dev-env <ns>` | Create dev environment | `k8s create-dev-env dev` |
-| | `setup-registry` | Local Docker registry | `k8s setup-registry` |
-| | `generate-manifests <n> <ns>` | Generate K8s manifests | `k8s generate-manifests app dev` |
-| **Monitoring** | `enable-monitoring` | Install monitoring stack | `k8s enable-monitoring` |
-| | `monitor-resources <ns>` | Real-time monitoring | `k8s monitor-resources dev` |
-| | `enable-istio` | Install service mesh | `k8s enable-istio` |
-| **Testing** | `load-test <url> <req> <conc>` | Performance testing | `k8s load-test http://app.local 1000 50` |
-| | `enable-chaos` | Chaos engineering | `k8s enable-chaos` |
-| **Ingress** | `enable-ingress` | Enable ingress controller | `k8s enable-ingress` |
-| | `create-ingress <n> <host> <svc>` | Create ingress | `k8s create-ingress app app.local svc:80` |
-| | `create-tls-ingress <n> <host> <svc>` | Create HTTPS ingress | `k8s create-tls-ingress app app.local svc:80` |
-| | `test-ingress <host>` | Test connectivity | `k8s test-ingress app.local` |
-| **Apps** | `deploy <file>` | Deploy from YAML | `k8s deploy app.yaml` |
-| | `scale <dep> <n> <ns>` | Scale deployment | `k8s scale web 5 dev` |
-| | `get-all <ns>` | List all resources | `k8s get-all dev` |
-| **Debug** | `logs <pod> <ns> [follow]` | View logs | `k8s logs web-123 dev follow` |
-| | `exec <pod> <ns> [cmd]` | Execute in pod | `k8s exec web-123 dev bash` |
-| | `port-forward <svc> <ports> <ns>` | Port forward | `k8s port-forward web 8080:80 dev` |
-| **Security** | `create-network-policies <ns>` | Create network policies | `k8s create-network-policies dev` |
-| **Backup** | `backup-namespace <ns>` | Backup namespace | `k8s backup-namespace prod` |
-| | `backup` | Backup cluster | `k8s backup` |
+| Category        | Command                               | Description                                                  | Example                                       |
+| --------------- | ------------------------------------- | ------------------------------------------------------------ | --------------------------------------------- |
+| **Setup**       | `install`                             | Install all prerequisites                                    | `k8s install`                                 |
+|                 | `start`                               | Start cluster                                                | `k8s start`                                   |
+|                 | `stop`                                | Stop cluster                                                 | `k8s stop`                                    |
+|                 | `status`                              | Show cluster status                                          | `k8s status`                                  |
+| **Development** | `create-dev-env <ns>`                 | Create dev environment                                       | `k8s create-dev-env dev`                      |
+|                 | `create-database-env <ns>`            | Create extended database env                                 | `k8s create-database-env databases`           |
+|                 | `create-messaging-env <ns>`           | Create messaging env (Kafka, RabbitMQ, ActiveMQ)             | `k8s create-messaging-env messaging`          |
+|                 | `create-vector-env <ns>`              | Create AI/ML vector DB env (Weaviate, Chroma, Qdrant, Elasticsearch) | `k8s create-vector-env vectordb`              |
+|                 | `setup-registry`                      | Local Docker registry                                        | `k8s setup-registry`                          |
+|                 | `generate-manifests <n> <ns>`         | Generate K8s manifests                                       | `k8s generate-manifests app dev`              |
+| **Monitoring**  | `enable-monitoring`                   | Install monitoring stack                                     | `k8s enable-monitoring`                       |
+|                 | `monitor-resources <ns>`              | Real-time monitoring                                         | `k8s monitor-resources dev`                   |
+|                 | `enable-istio`                        | Install service mesh                                         | `k8s enable-istio`                            |
+| **Testing**     | `load-test <url> <req> <conc>`        | Performance testing                                          | `k8s load-test http://app.local 1000 50`      |
+|                 | `enable-chaos`                        | Chaos engineering                                            | `k8s enable-chaos`                            |
+| **Ingress**     | `enable-ingress`                      | Enable ingress controller                                    | `k8s enable-ingress`                          |
+|                 | `create-ingress <n> <host> <svc>`     | Create ingress                                               | `k8s create-ingress app app.local svc:80`     |
+|                 | `create-tls-ingress <n> <host> <svc>` | Create HTTPS ingress                                         | `k8s create-tls-ingress app app.local svc:80` |
+|                 | `test-ingress <host>`                 | Test connectivity                                            | `k8s test-ingress app.local`                  |
+| **Apps**        | `deploy <file>`                       | Deploy from YAML                                             | `k8s deploy app.yaml`                         |
+|                 | `scale <dep> <n> <ns>`                | Scale deployment                                             | `k8s scale web 5 dev`                         |
+|                 | `get-all <ns>`                        | List all resources                                           | `k8s get-all dev`                             |
+| **Debug**       | `logs <pod> <ns> [follow]`            | View logs                                                    | `k8s logs web-123 dev follow`                 |
+|                 | `exec <pod> <ns> [cmd]`               | Execute in pod                                               | `k8s exec web-123 dev bash`                   |
+|                 | `port-forward <svc> <ports> <ns>`     | Port forward                                                 | `k8s port-forward web 8080:80 dev`            |
+| **Security**    | `create-network-policies <ns>`        | Create network policies                                      | `k8s create-network-policies dev`             |
+| **Backup**      | `backup-namespace <ns>`               | Backup namespace                                             | `k8s backup-namespace prod`                   |
+|                 | `backup`                              | Backup cluster                                               | `k8s backup`                                  |
+
+------
+
+## 📡 Service Access URLs
+
+| Service                                                                                         | Host / API                         | Web UI / Console                                   | Credentials               | 🧪 Test Command                                                                                        |
+| ----------------------------------------------------------------------------------------------- | ---------------------------------- | -------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [**PostgreSQL**](https://www.postgresql.org/docs/)                                              | `postgres:5432`                    | –                                                  | `devuser / devpass`       | `kubectl exec -it deploy/postgres -- psql -U devuser -c '\l'`                                          |
+| [**Redis**](https://redis.io/docs/)                                                             | `redis:6379`                       | –                                                  | –                         | `kubectl exec -it deploy/redis -- redis-cli PING`                                                      |
+| [**MinIO**](https://min.io/docs/minio/linux/index.html)                                         | `minio:9000`                       | [Web Console](http://$%28minikube%20ip%29:32001)   | `minioadmin / minioadmin` | `kubectl exec -it deploy/minio -- mc alias set local http://localhost:9000 minioadmin minioadmin`      |
+| [**MongoDB**](https://www.mongodb.com/docs/)                                                    | `mongodb:27017`                    | –                                                  | `admin / password123`     | `kubectl exec -it deploy/mongodb -- mongosh -u admin -p password123 --eval 'db.stats()'`               |
+| [**MySQL**](https://dev.mysql.com/doc/)                                                         | `mysql:3306`                       | –                                                  | `devuser / devpass123`    | `kubectl exec -it deploy/mysql -- mysql -u devuser -pdevpass123 -e "SHOW DATABASES;"`                  |
+| [**Cassandra**](https://cassandra.apache.org/doc/latest/)                                       | `cassandra:9042`                   | –                                                  | –                         | `kubectl exec -it deploy/cassandra -- cqlsh -e "DESCRIBE KEYSPACES;"`                                  |
+| [**Neo4j**](https://neo4j.com/docs/)                                                            | `neo4j:7687`                       | [Browser](http://$%28minikube%20ip%29:32474)       | `neo4j / password123`     | `kubectl exec -it deploy/neo4j -- cypher-shell -u neo4j -p password123 "MATCH (n) RETURN count(n);"`   |
+| [**Kafka**](https://kafka.apache.org/documentation/)                                            | `kafka:9092`                       | –                                                  | –                         | `kubectl exec -it deploy/kafka -- kafka-topics.sh --bootstrap-server localhost:9092 --list`            |
+| [**RabbitMQ**](https://www.rabbitmq.com/docs)                                                   | `rabbitmq:5672`                    | [Management UI](http://$%28minikube%20ip%29:32672) | `admin / password123`     | `kubectl exec -it deploy/rabbitmq -- rabbitmqctl list_queues`                                          |
+| [**ActiveMQ**](https://activemq.apache.org/components/classic/documentation)                    | `activemq:61616`                   | [Web Console](http://$%28minikube%20ip%29:32161)   | `admin / password123`     | `kubectl exec -it deploy/activemq -- curl -u admin:password123 http://localhost:8161/admin/queues.jsp` |
+| [**Weaviate**](https://weaviate.io/developers/weaviate)                                         | `weaviate:8080`                    | [Web UI](http://$%28minikube%20ip%29:32080)        | –                         | `kubectl exec -it deploy/weaviate -- curl http://localhost:8080/v1/meta`                               |
+| [**Chroma**](https://docs.trychroma.com/)                                                       | `chroma:8000`                      | –                                                  | –                         | `kubectl exec -it deploy/chroma -- curl http://localhost:8000/api/v1/collections`                      |
+| [**Qdrant**](https://qdrant.tech/documentation/)                                                | `qdrant:6333 (HTTP) / 6334 (gRPC)` | [Web UI](http://$%28minikube%20ip%29:32333)        | –                         | `kubectl exec -it deploy/qdrant -- curl http://localhost:6333/collections`                             |
+| [**Elasticsearch**](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html) | `elasticsearch:9200`               | [Web UI](http://$%28minikube%20ip%29:32200)        | –                         | `kubectl exec -it deploy/elasticsearch -- curl http://localhost:9200/_cluster/health?pretty`           |
+
+---
 
 ## 🔍 Troubleshooting
 
