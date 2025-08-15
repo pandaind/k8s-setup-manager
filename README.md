@@ -24,9 +24,9 @@ A comprehensive bash script for managing local Kubernetes clusters on Ubuntu Lin
 
 1. **Clone or download the script**:
    ```bash
-   wget https://raw.githubusercontent.com/your-repo/k8s-manager/main/k8s_manager.sh
+   wget https://raw.githubusercontent.com/pandaind/oneclick-k8s-local/main/k8s_manager.sh
    # OR
-   curl -O https://raw.githubusercontent.com/your-repo/k8s-manager/main/k8s_manager.sh
+   curl -O https://raw.githubusercontent.com/pandaind/oneclick-k8s-local/main/k8s_manager.sh
    ```
 
 2. **Make it executable and install globally**:
