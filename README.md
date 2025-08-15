@@ -1,24 +1,48 @@
 # Kubernetes Local Manager
 
-A comprehensive bash script for managing local Kubernetes clusters on Ubuntu Linux systems. This tool simplifies the entire lifecycle of local Kubernetes development - from installation to deployment and management.
+A comprehensive bash script for managing local Kubernetes clusters on Ubuntu Linux systems. This tool provides a complete production-grade local development environment with monitoring, service mesh, security, testing, and chaos engineering capabilities.
 
 ## 🚀 Features
 
-- **One-click setup**: Automatically installs Docker, kubectl, minikube, and Helm
+### **Core Cluster Management**
+- **One-click setup**: Automatically installs Docker, kubectl, minikube, Helm, and k9s
 - **Cluster lifecycle management**: Start, stop, restart, and delete clusters with simple commands
 - **Application deployment**: Deploy and manage applications using YAML files
 - **Namespace management**: Create and delete namespaces easily
-- **Debugging tools**: Access logs, execute commands in pods, and port forwarding
-- **Built-in dashboard**: Enable and access Kubernetes dashboard
-- **Backup functionality**: Backup cluster configurations and resources
-- **Safety features**: Confirmation prompts for destructive operations
-- **Colored output**: Easy-to-read console output with color coding
+
+### **Development & Testing Environment**
+- **Complete dev stack**: Redis, PostgreSQL, MinIO (S3-compatible storage)
+- **Local container registry**: Push and pull custom images locally
+- **Manifest generation**: Auto-generate production-ready Kubernetes manifests
+- **Load testing**: Built-in performance testing with configurable parameters
+
+### **Monitoring & Observability**
+- **Full monitoring stack**: Prometheus + Grafana + AlertManager
+- **Real-time monitoring**: Live resource usage tracking
+- **Service mesh observability**: Istio with Kiali, Jaeger tracing
+- **Dashboard access**: Kubernetes dashboard with metrics
+
+### **Networking & Security**
+- **Ingress management**: HTTP/HTTPS ingress with automatic SSL certificates
+- **Network policies**: Security policies for network isolation
+- **Service mesh**: Istio for advanced traffic management and security
+
+### **Advanced Testing**
+- **Chaos engineering**: Chaos Mesh for failure injection testing
+- **Performance testing**: Comprehensive load testing capabilities
+- **Auto-scaling**: HPA (Horizontal Pod Autoscaler) configurations
+
+### **Backup & Recovery**
+- **Namespace backup**: Complete backup with automated restore scripts
+- **Cluster configuration backup**: Full cluster state preservation
+- **Disaster recovery**: Quick restoration capabilities
 
 ## 📋 Prerequisites
 
 - Ubuntu Linux (18.04 or later)
 - Internet connection for downloading components
 - Sudo privileges for installation
+- At least 4GB RAM and 2 CPU cores recommended
 
 ## 🔧 Installation
 
@@ -62,188 +86,275 @@ k8s restart
 k8s delete
 ```
 
-### Namespace Operations
+### Development Environment Setup
 
 ```bash
-# Create a new namespace
-k8s create-ns my-application
+# Create complete development environment
+k8s create-dev-env development
 
-# Delete a namespace (with confirmation)
-k8s delete-ns my-application
+# Setup local Docker registry
+k8s setup-registry
+
+# Enable monitoring stack (Prometheus + Grafana)
+k8s enable-monitoring
+
+# Enable service mesh (Istio)
+k8s enable-istio
+
+# Enable ingress controller
+k8s enable-ingress
 ```
 
-### Application Management
+### Application Development
 
 ```bash
+# Generate sample Kubernetes manifests
+k8s generate-manifests webapp development
+
 # Deploy application from YAML file
 k8s deploy app.yaml
 
-# Remove deployed application
-k8s delete-app app.yaml
+# Scale applications
+k8s scale my-deployment 5 development
 
-# Get all resources in default namespace
-k8s get-all
+# Create ingress for external access
+k8s create-ingress webapp-ingress webapp.local webapp-service:80 development
 
-# Get all resources in specific namespace
-k8s get-all my-namespace
-
-# Scale a deployment
-k8s scale my-deployment 3 my-namespace
+# Create TLS ingress with self-signed certificate
+k8s create-tls-ingress secure-app secure.local webapp-service:80 development
 ```
 
-### Debugging and Development
+### Testing & Performance
+
+```bash
+# Run load tests
+k8s load-test http://webapp.local 1000 50
+
+# Monitor resources in real-time
+k8s monitor-resources development
+
+# Enable chaos engineering
+k8s enable-chaos
+
+# Test ingress connectivity
+k8s test-ingress webapp.local
+```
+
+### Debugging & Troubleshooting
 
 ```bash
 # View pod logs
-k8s logs my-pod-name my-namespace
+k8s logs webapp-pod-123 development
 
-# Follow pod logs in real-time
-k8s logs my-pod-name my-namespace follow
+# Follow logs in real-time
+k8s logs webapp-pod-123 development follow
 
-# Execute command in a pod
-k8s exec my-pod-name my-namespace
+# Execute commands in pods
+k8s exec webapp-pod-123 development bash
 
-# Execute specific command in a pod
-k8s exec my-pod-name my-namespace "ls -la"
-
-# Port forward to access services locally
-k8s port-forward my-service 8080:80 my-namespace
+# Port forward services
+k8s port-forward webapp-service 8080:80 development
 ```
 
-### Dashboard and Monitoring
+### Security & Network Management
 
 ```bash
-# Enable Kubernetes dashboard
-k8s enable-dashboard
+# Create network policies for security
+k8s create-network-policies development
 
-# Open dashboard in browser
-k8s dashboard
+# List and manage ingress resources
+k8s list-ingress development
+k8s describe-ingress webapp-ingress development
+k8s delete-ingress webapp-ingress development
 ```
 
-### Backup and Maintenance
+### Backup & Recovery
 
 ```bash
-# Backup cluster configuration and resources
+# Backup entire namespace
+k8s backup-namespace development
+
+# Backup cluster configuration
 k8s backup
 ```
 
-## 🎯 Quick Start Example
+## 🎯 Complete Development Workflow
 
-Here's a complete workflow from setup to deployment:
+Here's a comprehensive example from setup to production-ready testing:
 
 ```bash
-# 1. Install everything
+# 1. Initial setup
 k8s install
-
-# 2. Start cluster
 k8s start
 
-# 3. Create a namespace for your application
-k8s create-ns webapp
+# 2. Enable advanced features
+k8s enable-monitoring
+k8s enable-istio
+k8s enable-ingress
+k8s setup-registry
 
-# 4. Deploy your application (assuming you have app.yaml)
-k8s deploy app.yaml
+# 3. Create development environment
+k8s create-dev-env development
 
-# 5. Check if everything is running
-k8s get-all webapp
+# 4. Generate and customize application manifests
+k8s generate-manifests webapp development
+cd k8s-manifests-webapp
+# Edit manifests as needed
+./deploy.sh
 
-# 6. Scale your deployment if needed
-k8s scale webapp-deployment 3 webapp
+# 5. Setup external access
+k8s create-ingress webapp-ingress webapp.local webapp-service:80 development
 
-# 7. Access your application
-k8s port-forward webapp-service 8080:80 webapp
+# 6. Performance and chaos testing
+k8s load-test http://webapp.local 2000 100
+k8s enable-chaos
 
-# 8. Check logs if there are issues
-k8s logs webapp-pod-xyz webapp follow
+# 7. Monitor and debug
+k8s monitor-resources development
+k8s logs webapp-pod-xyz development follow
 
-# 9. Access pod for debugging
-k8s exec webapp-pod-xyz webapp
+# 8. Security testing
+k8s create-network-policies development
+
+# 9. Backup before changes
+k8s backup-namespace development
 ```
 
-## 📁 Example YAML Files
+## 🏗️ Development Environment Components
 
-### Simple Nginx Deployment
+When you run `k8s create-dev-env`, you get:
 
-Create `nginx-app.yaml`:
+### **Database Services**
+- **PostgreSQL**: Full-featured database
+  - Host: `postgres:5432`
+  - Database: `devdb`
+  - User: `devuser`
+  - Password: `devpass`
 
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-  namespace: webapp
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:latest
-        ports:
-        - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-  namespace: webapp
-spec:
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: ClusterIP
-```
+### **Caching & Storage**
+- **Redis**: In-memory cache and session store
+  - Host: `redis:6379`
+- **MinIO**: S3-compatible object storage
+  - API: `minio:9000`
+  - Console: `http://$(minikube ip):32001`
+  - Credentials: `minioadmin:minioadmin`
 
-Deploy it:
+## 📊 Monitoring & Observability
+
+### **Prometheus + Grafana Stack**
 ```bash
-k8s create-ns webapp
-k8s deploy nginx-app.yaml
-k8s port-forward nginx-service 8080:80 webapp
+k8s enable-monitoring
+
+# Access points:
+# Grafana: http://$(minikube ip):[NodePort]
+# Username: admin, Password: admin123
+# Prometheus: http://$(minikube ip):[NodePort]
 ```
 
-## 🛠️ Configuration
+### **Istio Service Mesh**
+```bash
+k8s enable-istio
 
-The script uses these default configurations:
+# Access Kiali dashboard:
+istioctl dashboard kiali
 
-- **Cluster Name**: `local-k8s`
-- **Minikube Driver**: `docker`
-- **Default CPU**: 2 cores
-- **Default Memory**: 2GB
-- **Kubeconfig Path**: `~/.kube/config`
-- **Backup Location**: `~/k8s-backups/`
+# Features included:
+# - Traffic management
+# - Security policies
+# - Distributed tracing (Jaeger)
+# - Service mesh visualization
+```
+
+## 🧪 Testing Capabilities
+
+### **Load Testing**
+```bash
+# Basic load test
+k8s load-test http://webapp.local
+
+# Advanced load test
+k8s load-test http://webapp.local 5000 200
+
+# Parameters: URL, total requests, concurrent requests
+```
+
+### **Chaos Engineering**
+```bash
+k8s enable-chaos
+
+# Access Chaos Dashboard:
+kubectl port-forward -n chaos-testing svc/chaos-dashboard 2333:2333
+# Then visit: http://localhost:2333
+```
+
+## 📁 Generated Manifest Examples
+
+The `k8s generate-manifests` command creates:
+
+### **Deployment with Best Practices**
+- Resource limits and requests
+- Liveness and readiness probes
+- Rolling update strategy
+- Security context
+
+### **Complete Service Stack**
+- ClusterIP service
+- Ingress with SSL/TLS support
+- ConfigMap for configuration
+- Secret for sensitive data
+- HPA for auto-scaling
+
+### **Ready-to-Use Scripts**
+- `deploy.sh` - One-click deployment
+- `restore.sh` - Automated backup restoration
+
+## 🛡️ Security Features
+
+### **Network Policies**
+```bash
+k8s create-network-policies development
+
+# Creates policies for:
+# - Default deny ingress traffic
+# - Allow same-namespace communication
+# - Allow ingress controller access
+```
+
+### **TLS/SSL Support**
+```bash
+# Create HTTPS ingress with self-signed certificate
+k8s create-tls-ingress secure-app secure.local webapp-service:80 development
+```
 
 ## 📊 Commands Reference
 
-| Command | Description | Example |
-|---------|-------------|---------|
-| `install` | Install prerequisites | `k8s install` |
-| `start` | Start cluster | `k8s start` |
-| `stop` | Stop cluster | `k8s stop` |
-| `restart` | Restart cluster | `k8s restart` |
-| `delete` | Delete cluster | `k8s delete` |
-| `status` | Show cluster status | `k8s status` |
-| `create-ns <name>` | Create namespace | `k8s create-ns myapp` |
-| `delete-ns <name>` | Delete namespace | `k8s delete-ns myapp` |
-| `deploy <file>` | Deploy from YAML | `k8s deploy app.yaml` |
-| `delete-app <file>` | Delete from YAML | `k8s delete-app app.yaml` |
-| `get-all [namespace]` | List resources | `k8s get-all myapp` |
-| `scale <deploy> <count> [ns]` | Scale deployment | `k8s scale web 3 myapp` |
-| `logs <pod> [ns] [follow]` | View logs | `k8s logs web-123 myapp follow` |
-| `exec <pod> [ns] [cmd]` | Execute in pod | `k8s exec web-123 myapp bash` |
-| `port-forward <svc> <ports> [ns]` | Port forward | `k8s port-forward web 8080:80 myapp` |
-| `enable-dashboard` | Enable dashboard | `k8s enable-dashboard` |
-| `dashboard` | Open dashboard | `k8s dashboard` |
-| `backup` | Backup config | `k8s backup` |
-| `help` | Show help | `k8s help` |
+| Category | Command | Description | Example |
+|----------|---------|-------------|---------|
+| **Setup** | `install` | Install all prerequisites | `k8s install` |
+| | `start` | Start cluster | `k8s start` |
+| | `stop` | Stop cluster | `k8s stop` |
+| | `status` | Show cluster status | `k8s status` |
+| **Development** | `create-dev-env <ns>` | Create dev environment | `k8s create-dev-env dev` |
+| | `setup-registry` | Local Docker registry | `k8s setup-registry` |
+| | `generate-manifests <n> <ns>` | Generate K8s manifests | `k8s generate-manifests app dev` |
+| **Monitoring** | `enable-monitoring` | Install monitoring stack | `k8s enable-monitoring` |
+| | `monitor-resources <ns>` | Real-time monitoring | `k8s monitor-resources dev` |
+| | `enable-istio` | Install service mesh | `k8s enable-istio` |
+| **Testing** | `load-test <url> <req> <conc>` | Performance testing | `k8s load-test http://app.local 1000 50` |
+| | `enable-chaos` | Chaos engineering | `k8s enable-chaos` |
+| **Ingress** | `enable-ingress` | Enable ingress controller | `k8s enable-ingress` |
+| | `create-ingress <n> <host> <svc>` | Create ingress | `k8s create-ingress app app.local svc:80` |
+| | `create-tls-ingress <n> <host> <svc>` | Create HTTPS ingress | `k8s create-tls-ingress app app.local svc:80` |
+| | `test-ingress <host>` | Test connectivity | `k8s test-ingress app.local` |
+| **Apps** | `deploy <file>` | Deploy from YAML | `k8s deploy app.yaml` |
+| | `scale <dep> <n> <ns>` | Scale deployment | `k8s scale web 5 dev` |
+| | `get-all <ns>` | List all resources | `k8s get-all dev` |
+| **Debug** | `logs <pod> <ns> [follow]` | View logs | `k8s logs web-123 dev follow` |
+| | `exec <pod> <ns> [cmd]` | Execute in pod | `k8s exec web-123 dev bash` |
+| | `port-forward <svc> <ports> <ns>` | Port forward | `k8s port-forward web 8080:80 dev` |
+| **Security** | `create-network-policies <ns>` | Create network policies | `k8s create-network-policies dev` |
+| **Backup** | `backup-namespace <ns>` | Backup namespace | `k8s backup-namespace prod` |
+| | `backup` | Backup cluster | `k8s backup` |
 
 ## 🔍 Troubleshooting
 
@@ -261,23 +372,94 @@ The script uses these default configurations:
    k8s start   # Start fresh
    ```
 
-3. **kubectl command not found**:
+3. **Resource constraints**:
    ```bash
-   k8s install  # Reinstall prerequisites
+   # Increase minikube resources
+   minikube config set memory 4096
+   minikube config set cpus 2
+   k8s restart
    ```
 
-4. **Port already in use**:
+4. **Ingress not accessible**:
    ```bash
-   # Kill process using the port
-   sudo lsof -ti:8080 | xargs kill -9
+   # Check ingress controller
+   kubectl get pods -n ingress-nginx
+   
+   # Test connectivity
+   k8s test-ingress your-host.local
+   
+   # Verify /etc/hosts entry
+   echo "$(minikube ip) your-host.local" | sudo tee -a /etc/hosts
    ```
 
-### Logs and Debugging
+5. **Monitoring not working**:
+   ```bash
+   # Check monitoring namespace
+   kubectl get pods -n monitoring
+   
+   # Reinstall if needed
+   helm uninstall prometheus -n monitoring
+   k8s enable-monitoring
+   ```
 
-- Check script logs: The script provides colored output for easy debugging
-- Check minikube logs: `minikube logs`
-- Check kubectl connectivity: `kubectl cluster-info`
-- Verify Docker: `docker ps`
+### Performance Optimization
+
+- **Increase minikube resources** for better performance:
+  ```bash
+  minikube config set memory 8192
+  minikube config set cpus 4
+  ```
+
+- **Use SSD storage** for better I/O performance
+
+- **Enable feature gates** for advanced Kubernetes features:
+  ```bash
+  minikube start --feature-gates="EphemeralContainers=true"
+  ```
+
+## 🎨 Advanced Usage Examples
+
+### **Microservices Testing Setup**
+```bash
+# Setup complete microservices environment
+k8s start
+k8s enable-istio
+k8s enable-monitoring
+k8s create-dev-env microservices
+
+# Generate multiple services
+k8s generate-manifests user-service microservices
+k8s generate-manifests order-service microservices
+k8s generate-manifests payment-service microservices
+
+# Deploy with ingress
+k8s create-ingress api-gateway api.local user-service:80 microservices
+```
+
+### **CI/CD Pipeline Testing**
+```bash
+# Setup registry and dev environment
+k8s setup-registry
+k8s create-dev-env ci-cd
+
+# Build and push custom image
+docker build -t $(minikube ip):32000/myapp:v1.0 .
+docker push $(minikube ip):32000/myapp:v1.0
+
+# Deploy and test
+k8s deploy myapp.yaml
+k8s load-test http://myapp.local 1000 20
+```
+
+### **Security Testing**
+```bash
+# Setup secure environment
+k8s create-network-policies production
+k8s create-tls-ingress secure-app secure.local webapp-service:443 production
+
+# Test security policies
+kubectl run test-pod --rm -it --image=busybox -- wget -qO- webapp-service
+```
 
 ## 🤝 Contributing
 
@@ -291,6 +473,22 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Test thoroughly with different scenarios
 5. Submit a pull request
 
+### Testing Your Changes
+
+```bash
+# Test basic functionality
+k8s install
+k8s start
+k8s create-dev-env test
+k8s generate-manifests test-app test
+k8s enable-monitoring
+
+# Test advanced features
+k8s enable-istio
+k8s load-test http://test-app.local
+k8s backup-namespace test
+```
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -301,6 +499,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [kubectl](https://kubernetes.io/docs/reference/kubectl/) - Kubernetes command-line tool
 - [Docker](https://www.docker.com/) - Container platform
 - [Helm](https://helm.sh/) - Package manager for Kubernetes
+- [Prometheus](https://prometheus.io/) - Monitoring and alerting toolkit
+- [Grafana](https://grafana.com/) - Visualization and analytics platform
+- [Istio](https://istio.io/) - Service mesh platform
+- [Chaos Mesh](https://chaos-mesh.org/) - Chaos engineering platform
+- [k9s](https://k9scli.io/) - Kubernetes CLI manager
 
 ## 📞 Support
 
@@ -309,8 +512,23 @@ If you encounter any issues or have questions:
 1. Check the [troubleshooting section](#-troubleshooting)
 2. Review the [commands reference](#-commands-reference)
 3. Open an issue in the repository
-4. Check Kubernetes and minikube documentation
+4. Check individual tool documentation:
+   - [Kubernetes Documentation](https://kubernetes.io/docs/)
+   - [Minikube Documentation](https://minikube.sigs.k8s.io/docs/)
+   - [Istio Documentation](https://istio.io/latest/docs/)
+
+## 🚀 Roadmap
+
+Future enhancements planned:
+- ArgoCD for GitOps workflows
+- Tekton for CI/CD pipelines  
+- OPA (Open Policy Agent) for advanced policies
+- Linkerd as alternative service mesh
+- Multi-cluster support
+- Cloud provider integration
 
 ---
 
 **Happy Kubernetes development! 🎉**
+
+> This tool transforms your local machine into a production-grade Kubernetes development environment with enterprise-level capabilities.
