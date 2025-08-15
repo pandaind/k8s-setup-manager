@@ -346,6 +346,18 @@ show_help() {
     echo "  exec <pod> [namespace] [command] Execute command in pod"
     echo "  port-forward <service> <local:service-port> [namespace] Port forward to service"
     echo
+    echo -e "${GREEN}Ingress Management:${NC}"
+    echo "  enable-ingress        Enable NGINX ingress controller"
+    echo "  disable-ingress       Disable ingress controller"
+    echo "  create-ingress <name> <host> <service:port> [namespace] [path]"
+    echo "                        Create ingress resource"
+    echo "  create-tls-ingress <name> <host> <service:port> [namespace]"
+    echo "                        Create TLS ingress with self-signed cert"
+    echo "  delete-ingress <name> [namespace] Delete ingress resource"
+    echo "  list-ingress [namespace] List ingress resources"
+    echo "  describe-ingress <name> [namespace] Describe ingress details"
+    echo "  test-ingress <host> [path] [port] Test ingress connectivity"
+    echo
     echo -e "${GREEN}Dashboard & Monitoring:${NC}"
     echo "  enable-dashboard      Enable Kubernetes dashboard"
     echo "  dashboard            Open dashboard in browser"
@@ -357,9 +369,12 @@ show_help() {
     echo "  $0 start"
     echo "  $0 create-ns my-app"
     echo "  $0 deploy app.yaml"
+    echo "  $0 enable-ingress"
+    echo "  $0 create-ingress my-ingress app.local my-service:80 default"
     echo "  $0 scale my-deployment 3 my-namespace"
     echo "  $0 logs my-pod default follow"
     echo "  $0 port-forward my-service 8080:80"
+    echo "  $0 test-ingress app.local"
 }
 
 # Main function
@@ -411,6 +426,30 @@ main() {
             ;;
         port-forward)
             port_forward "$2" "$3" "$4"
+            ;;
+        enable-ingress)
+            enable_ingress
+            ;;
+        disable-ingress)
+            disable_ingress
+            ;;
+        create-ingress)
+            create_ingress "$2" "$3" "$4" "$5" "$6"
+            ;;
+        create-tls-ingress)
+            create_tls_ingress "$2" "$3" "$4" "$5"
+            ;;
+        delete-ingress)
+            delete_ingress "$2" "$3"
+            ;;
+        list-ingress)
+            list_ingress "$2"
+            ;;
+        describe-ingress)
+            describe_ingress "$2" "$3"
+            ;;
+        test-ingress)
+            test_ingress "$2" "$3" "$4"
             ;;
         enable-dashboard)
             enable_dashboard
