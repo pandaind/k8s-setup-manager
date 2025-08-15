@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Kubernetes Local Management Script for Ubuntu
+# Author: Generated for local K8s management
 # Version: 1.0
 
 set -e
@@ -356,7 +357,10 @@ show_help() {
     echo "  enable-monitoring     Install Prometheus, Grafana monitoring stack"
     echo "  enable-istio         Install Istio service mesh"
     echo "  setup-registry       Setup local Docker registry"
-    echo "  create-dev-env [ns]  Create development environment with Redis, PostgreSQL, MinIO"
+    echo "  create-dev-env [ns]  Create basic development environment (Redis, PostgreSQL, MinIO)"
+    echo "  create-database-env [ns] Extended databases (MongoDB, MySQL, Cassandra, Neo4j)"
+    echo "  create-messaging-env [ns] Messaging systems (Kafka, RabbitMQ, ActiveMQ)"
+    echo "  create-vector-env [ns] Vector & search DBs (Weaviate, Chroma, Qdrant, Elasticsearch)"
     echo "  load-test <url> [req] [conc] Run load tests against URL"
     echo "  monitor-resources [ns] Monitor resource usage in real-time"
     echo "  enable-chaos         Install Chaos Mesh for chaos engineering"
@@ -391,6 +395,9 @@ show_help() {
     echo "  $0 start"
     echo "  $0 create-ns my-app"
     echo "  $0 create-dev-env development"
+    echo "  $0 create-database-env databases"
+    echo "  $0 create-messaging-env messaging"
+    echo "  $0 create-vector-env vectordb"
     echo "  $0 enable-monitoring"
     echo "  $0 generate-manifests webapp development"
     echo "  $0 deploy app.yaml"
@@ -463,6 +470,15 @@ main() {
             ;;
         create-dev-env)
             create_dev_env "$2"
+            ;;
+        create-database-env)
+            create_database_env "$2"
+            ;;
+        create-messaging-env)
+            create_messaging_env "$2"
+            ;;
+        create-vector-env)
+            create_vector_env "$2"
             ;;
         load-test)
             load_test "$2" "$3" "$4"
