@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Kubernetes Local Management Script for Ubuntu
-# Author: Generated for local K8s management
 # Version: 1.0
 
 set -e
@@ -78,6 +77,13 @@ install_prerequisites() {
     if ! command_exists helm; then
         log "Installing Helm..."
         curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    fi
+    
+    # Install k9s for cluster monitoring (optional but very useful)
+    if ! command_exists k9s; then
+        log "Installing k9s (Kubernetes CLI manager)..."
+        curl -sL https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_amd64.tar.gz | tar xz -C /tmp
+        sudo mv /tmp/k9s /usr/local/bin/
     fi
     
     log "Prerequisites installation completed!"
@@ -346,6 +352,22 @@ show_help() {
     echo "  exec <pod> [namespace] [command] Execute command in pod"
     echo "  port-forward <service> <local:service-port> [namespace] Port forward to service"
     echo
+    echo -e "${GREEN}Development & Testing Tools:${NC}"
+    echo "  enable-monitoring     Install Prometheus, Grafana monitoring stack"
+    echo "  enable-istio         Install Istio service mesh"
+    echo "  setup-registry       Setup local Docker registry"
+    echo "  create-dev-env [ns]  Create development environment with Redis, PostgreSQL, MinIO"
+    echo "  load-test <url> [req] [conc] Run load tests against URL"
+    echo "  monitor-resources [ns] Monitor resource usage in real-time"
+    echo "  enable-chaos         Install Chaos Mesh for chaos engineering"
+    echo
+    echo -e "${GREEN}Security & Network:${NC}"
+    echo "  create-network-policies [ns] Create sample network policies"
+    echo
+    echo -e "${GREEN}Utilities & Generators:${NC}"
+    echo "  generate-manifests [name] [ns] Generate sample K8s manifests"
+    echo "  backup-namespace <ns> Backup entire namespace"
+    echo
     echo -e "${GREEN}Ingress Management:${NC}"
     echo "  enable-ingress        Enable NGINX ingress controller"
     echo "  disable-ingress       Disable ingress controller"
@@ -368,13 +390,16 @@ show_help() {
     echo -e "${GREEN}Examples:${NC}"
     echo "  $0 start"
     echo "  $0 create-ns my-app"
+    echo "  $0 create-dev-env development"
+    echo "  $0 enable-monitoring"
+    echo "  $0 generate-manifests webapp development"
     echo "  $0 deploy app.yaml"
     echo "  $0 enable-ingress"
     echo "  $0 create-ingress my-ingress app.local my-service:80 default"
+    echo "  $0 load-test http://app.local 1000 50"
     echo "  $0 scale my-deployment 3 my-namespace"
-    echo "  $0 logs my-pod default follow"
-    echo "  $0 port-forward my-service 8080:80"
-    echo "  $0 test-ingress app.local"
+    echo "  $0 monitor-resources development"
+    echo "  $0 backup-namespace production"
 }
 
 # Main function
@@ -426,6 +451,39 @@ main() {
             ;;
         port-forward)
             port_forward "$2" "$3" "$4"
+            ;;
+        enable-monitoring)
+            enable_monitoring
+            ;;
+        enable-istio)
+            enable_istio
+            ;;
+        setup-registry)
+            setup_registry
+            ;;
+        create-dev-env)
+            create_dev_env "$2"
+            ;;
+        load-test)
+            load_test "$2" "$3" "$4"
+            ;;
+        monitor-resources)
+            monitor_resources "$2"
+            ;;
+        enable-chaos)
+            enable_chaos
+            ;;
+        create-network-policies)
+            create_network_policies "$2"
+            ;;
+        generate-manifests)
+            generate_manifests "$2" "$3"
+            ;;
+        backup-namespace)
+            backup_namespace "$2"
+            ;;
+        enable-dashboard)
+            enable_dashboard
             ;;
         enable-ingress)
             enable_ingress
