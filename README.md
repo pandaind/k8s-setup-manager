@@ -41,7 +41,7 @@ The script automatically installs:
 ### 1. Installation
 ```bash
 # Download and setup
-wget https://raw.githubusercontent.com/pandaind/oneclick-k8s-local/main/k8s_manager.sh
+wget https://raw.githubusercontent.com/pandaind/k8s-setup-manager/main/k8s_manager.sh
 chmod +x k8s_manager.sh
 
 # Install prerequisites and start
