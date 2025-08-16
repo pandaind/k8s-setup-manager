@@ -1,13 +1,234 @@
-# Kubernetes Local Manager
+# Kubernetes Local Manager 2.0
 
-A comprehensive bash script for managing local Kubernetes clusters on Ubuntu Linux systems. This tool provides a complete production-grade local development environment with monitoring, service mesh, security, testing, and chaos engineering capabilities.
+A comprehensive, modular Kubernetes local development environment manager that provides both interactive menu-driven interface and command-line functionality.
 
 ## 🚀 Features
 
-### **Core Cluster Management**
-- **One-click setup**: Automatically installs Docker, kubectl, minikube, Helm, and k9s
-- **Cluster lifecycle management**: Start, stop, restart, and delete clusters with simple commands
-- **Application deployment**: Deploy and manage applications using YAML files
+### Interactive Menu System
+- **User-friendly interface**: Navigate through organized categories
+- **Guided workflows**: Step-by-step prompts for all operations
+- **Quick setup wizards**: Pre-configured environments for different use cases
+
+### Modular Architecture
+- **Cluster Management**: Start, stop, configure, and maintain your local K8s cluster
+- **Development Environments**: Pre-built setups for databases, messaging, vector DBs
+- **Application Management**: Deploy, scale, monitor applications
+- **Networking & Ingress**: Complete ingress management with TLS support
+- **Monitoring & Debugging**: Built-in monitoring, chaos engineering, load testing
+- **Utilities & Tools**: Manifest generation, backups, and maintenance tools
+
+### Quick Setup Wizards
+1. **Complete Development**: Full-featured development environment
+2. **Microservices**: Service mesh, registry, messaging
+3. **Data Engineering**: Databases, messaging, vector stores
+4. **AI/ML**: Vector databases and ML-ready environment
+5. **Web Application**: Frontend-optimized setup with ingress
+
+## 📋 Prerequisites
+
+The script will automatically install:
+- Docker
+- kubectl
+- minikube  
+- Helm
+- k9s (Kubernetes CLI manager)
+
+## 🎯 Quick Start
+
+### Interactive Mode (Recommended)
+```bash
+./k8s_manager.sh
+```
+
+### Command Line Mode
+```bash
+./k8s_manager.sh <command> [arguments]
+```
+
+### Quick Wizards
+```bash
+./k8s_manager.sh wizard-complete-dev    # Complete development setup
+./k8s_manager.sh wizard-microservices   # Microservices environment
+./k8s_manager.sh wizard-data-eng        # Data engineering stack
+./k8s_manager.sh wizard-aiml            # AI/ML development
+./k8s_manager.sh wizard-webapp          # Web application setup
+```
+
+## � Main Categories
+
+### 1. Cluster Management
+- Install prerequisites
+- Start/stop/restart cluster
+- Cluster status and monitoring
+- Dashboard access
+- Configuration backup
+
+### 2. Development Environments
+
+Choose from individual components or pre-configured environments:
+
+**Storage & Caching:**
+- **Redis**: In-memory cache
+- **Memcached**: High-performance caching  
+- **Hazelcast**: In-memory data grid
+- **MinIO**: S3-compatible object storage
+
+**Databases:**
+- **PostgreSQL**: Relational database
+- **MongoDB**: Document database
+- **MySQL**: Relational database
+- **Cassandra**: Wide-column database
+- **InfluxDB**: Time-series database
+
+**Messaging Systems:**
+- **Apache Kafka**: Event streaming platform
+- **RabbitMQ**: Message broker
+- **ActiveMQ Artemis**: Enterprise message broker
+- **Apache Pulsar**: Pub-sub messaging platform
+- **Zookeeper**: Coordination service
+
+**Vector & Search:**
+- **Weaviate**: Vector database
+- **Qdrant**: Vector search engine
+- **Elasticsearch**: Search and analytics
+- **OpenSearch**: Open-source search and analytics
+
+### 3. Application Management
+- Deploy applications from YAML
+- Generate sample manifests
+- Scale deployments
+- View resources and logs
+- Pod execution and port forwarding
+
+### 4. Networking & Ingress
+- Enable/disable ingress controller
+- Create HTTP/HTTPS ingress resources
+- TLS certificate management
+- Network policies
+- Connectivity testing
+
+### 5. Monitoring & Debugging
+- Prometheus & Grafana monitoring stack
+- Istio service mesh
+- Chaos engineering (Chaos Mesh)
+- Real-time resource monitoring
+- Load testing tools
+
+### 6. Utilities & Tools
+- Kubernetes manifest generators
+- Namespace and cluster backups
+- Local Docker registry
+- Network security policies
+
+## 📖 Usage Examples
+
+### Interactive Mode
+```bash
+./k8s_manager.sh
+# Follow the menu-driven interface
+```
+
+### Command Line Examples
+```bash
+# Quick complete setup
+./k8s_manager.sh wizard-complete-dev
+
+# Manual cluster operations
+./k8s_manager.sh start
+./k8s_manager.sh status
+
+# Create individual components
+./k8s_manager.sh deploy-redis development
+./k8s_manager.sh deploy-postgresql databases  
+./k8s_manager.sh deploy-artemis messaging
+./k8s_manager.sh deploy-weaviate vectordb
+./k8s_manager.sh deploy-memcached caching
+./k8s_manager.sh deploy-influxdb timeseries
+
+# Application management
+./k8s_manager.sh generate-manifests webapp development
+./k8s_manager.sh deploy ./manifests-webapp/
+
+# Ingress management
+./k8s_manager.sh enable-ingress
+./k8s_manager.sh create-ingress my-app app.local my-service:80
+
+# Monitoring
+./k8s_manager.sh enable-monitoring
+./k8s_manager.sh monitor-resources development
+
+# Load testing
+./k8s_manager.sh load-test http://app.local 1000 50
+```
+
+## 🎛️ Component Details
+
+### Storage & Caching
+- **Redis**: In-memory data store and cache
+- **Memcached**: High-performance distributed caching system
+- **Hazelcast**: In-memory data grid with distributed computing
+- **MinIO**: S3-compatible object storage
+
+### Database Systems
+- **PostgreSQL**: Advanced relational database
+- **MongoDB**: Document-oriented database
+- **MySQL**: Popular relational database
+- **Cassandra**: Wide-column NoSQL database
+- **InfluxDB**: Time-series database optimized for metrics and events
+
+### Messaging Systems
+- **Apache Kafka**: Distributed event streaming platform
+- **RabbitMQ**: Feature-rich message broker
+- **ActiveMQ Artemis**: High-performance enterprise messaging
+- **Apache Pulsar**: Cloud-native pub-sub messaging
+- **Zookeeper**: Distributed coordination service
+
+### Vector & Search Engines
+- **Weaviate**: AI-native vector database
+- **Qdrant**: High-performance vector search engine
+- **Elasticsearch**: Distributed search and analytics engine
+- **OpenSearch**: Open-source search and analytics suite
+
+## 🛡️ Security Features
+- Network policies for pod isolation
+- TLS ingress with automatic certificate generation
+- Namespace-based resource isolation
+- RBAC-ready configurations
+
+## 🔧 Advanced Features
+- **Chaos Engineering**: Built-in chaos testing with Chaos Mesh
+- **Service Mesh**: Istio integration for advanced traffic management
+- **Monitoring Stack**: Complete observability with Prometheus & Grafana
+- **Load Testing**: Apache Bench integration for performance testing
+
+## 📁 File Organization
+After running, the script creates:
+- `~/k8s-backups/`: Cluster and namespace backups
+- `./manifests-*/`: Generated Kubernetes manifests
+- Local registry and development data
+
+## 🚨 Important Notes
+- **Minikube Driver**: Uses Docker by default (configurable)
+- **Resource Requirements**: 2 CPUs, 2GB RAM minimum for minikube
+- **Port Conflicts**: Check for port conflicts if services don't start
+- **Cleanup**: Use delete commands to clean up resources when done
+
+## 🆘 Troubleshooting
+- Run `./k8s_manager.sh status` to check cluster health
+- Use `./k8s_manager.sh logs <pod-name>` for debugging
+- Monitor resources with `./k8s_manager.sh monitor-resources`
+- Access dashboard with `./k8s_manager.sh dashboard`
+
+## 🔄 Migration from v1.0
+The new version is fully backward compatible. All previous commands work, plus:
+- New interactive interface (default when no arguments)
+- Quick setup wizards
+- Enhanced error handling and user guidance
+- Organized menu system
+
+---
+
+**Happy Kubernetes Development!** 🎉
 - **Namespace management**: Create and delete namespaces easily
 
 ### **Development & Testing Environment**
