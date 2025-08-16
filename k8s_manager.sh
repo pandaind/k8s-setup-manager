@@ -2869,7 +2869,7 @@ show_menu() {
     clear
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
     echo -e "${BLUE}║                    Kubernetes Local Manager                    ║${NC}"
-    echo -e "${BLUE}║                         Version 2.0                           ║${NC}"
+    echo -e "${BLUE}║                         Version 2.0                            ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo
     echo -e "${GREEN}Select a category:${NC}"
@@ -2889,7 +2889,7 @@ show_menu() {
 show_cluster_menu() {
     clear
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                     Cluster Management                        ║${NC}"
+    echo -e "${BLUE}║                     Cluster Management                         ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo
     echo -e "${GREEN}Available Options:${NC}"
@@ -2910,7 +2910,7 @@ show_cluster_menu() {
 show_dev_env_menu() {
     clear
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                  Development Environments                     ║${NC}"
+    echo -e "${BLUE}║                  Development Environments                      ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo
     echo -e "${GREEN}Select Individual Components:${NC}"
@@ -2952,7 +2952,7 @@ show_dev_env_menu() {
 show_app_menu() {
     clear
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                   Application Management                      ║${NC}"
+    echo -e "${BLUE}║                   Application Management                       ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo
     echo -e "${GREEN}Available Options:${NC}"
@@ -2973,7 +2973,7 @@ show_app_menu() {
 show_networking_menu() {
     clear
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                    Networking & Ingress                       ║${NC}"
+    echo -e "${BLUE}║                    Networking & Ingress                        ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo
     echo -e "${GREEN}Available Options:${NC}"
@@ -2994,7 +2994,7 @@ show_networking_menu() {
 show_monitoring_menu() {
     clear
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                   Monitoring & Debugging                      ║${NC}"
+    echo -e "${BLUE}║                   Monitoring & Debugging                       ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo
     echo -e "${GREEN}Monitoring Components:${NC}"
@@ -3025,7 +3025,7 @@ show_monitoring_menu() {
 show_utilities_menu() {
     clear
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                      Utilities & Tools                        ║${NC}"
+    echo -e "${BLUE}║                      Utilities & Tools                         ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo
     echo -e "${GREEN}Available Options:${NC}"
@@ -3043,7 +3043,7 @@ show_utilities_menu() {
 show_wizard_menu() {
     clear
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                      Quick Setup Wizard                       ║${NC}"
+    echo -e "${BLUE}║                      Quick Setup Wizard                        ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo
     echo -e "${GREEN}Quick Setup Options:${NC}"
