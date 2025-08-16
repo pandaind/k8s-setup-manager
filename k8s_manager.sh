@@ -80,6 +80,13 @@ install_prerequisites() {
         curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
     fi
     
+    # Install k9s for cluster monitoring (optional but very useful)
+    if ! command_exists k9s; then
+        log "Installing k9s (Kubernetes CLI manager)..."
+        curl -sL https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_amd64.tar.gz | tar xz -C /tmp
+        sudo mv /tmp/k9s /usr/local/bin/
+    fi
+    
     log "Prerequisites installation completed!"
 }
 
@@ -346,6 +353,37 @@ show_help() {
     echo "  exec <pod> [namespace] [command] Execute command in pod"
     echo "  port-forward <service> <local:service-port> [namespace] Port forward to service"
     echo
+    echo -e "${GREEN}Development & Testing Tools:${NC}"
+    echo "  enable-monitoring     Install Prometheus, Grafana monitoring stack"
+    echo "  enable-istio         Install Istio service mesh"
+    echo "  setup-registry       Setup local Docker registry"
+    echo "  create-dev-env [ns]  Create basic development environment (Redis, PostgreSQL, MinIO)"
+    echo "  create-database-env [ns] Extended databases (MongoDB, MySQL, Cassandra, Neo4j)"
+    echo "  create-messaging-env [ns] Messaging systems (Kafka, RabbitMQ, ActiveMQ)"
+    echo "  create-vector-env [ns] Vector & search DBs (Weaviate, Chroma, Qdrant, Elasticsearch)"
+    echo "  load-test <url> [req] [conc] Run load tests against URL"
+    echo "  monitor-resources [ns] Monitor resource usage in real-time"
+    echo "  enable-chaos         Install Chaos Mesh for chaos engineering"
+    echo
+    echo -e "${GREEN}Security & Network:${NC}"
+    echo "  create-network-policies [ns] Create sample network policies"
+    echo
+    echo -e "${GREEN}Utilities & Generators:${NC}"
+    echo "  generate-manifests [name] [ns] Generate sample K8s manifests"
+    echo "  backup-namespace <ns> Backup entire namespace"
+    echo
+    echo -e "${GREEN}Ingress Management:${NC}"
+    echo "  enable-ingress        Enable NGINX ingress controller"
+    echo "  disable-ingress       Disable ingress controller"
+    echo "  create-ingress <name> <host> <service:port> [namespace] [path]"
+    echo "                        Create ingress resource"
+    echo "  create-tls-ingress <name> <host> <service:port> [namespace]"
+    echo "                        Create TLS ingress with self-signed cert"
+    echo "  delete-ingress <name> [namespace] Delete ingress resource"
+    echo "  list-ingress [namespace] List ingress resources"
+    echo "  describe-ingress <name> [namespace] Describe ingress details"
+    echo "  test-ingress <host> [path] [port] Test ingress connectivity"
+    echo
     echo -e "${GREEN}Dashboard & Monitoring:${NC}"
     echo "  enable-dashboard      Enable Kubernetes dashboard"
     echo "  dashboard            Open dashboard in browser"
@@ -356,10 +394,19 @@ show_help() {
     echo -e "${GREEN}Examples:${NC}"
     echo "  $0 start"
     echo "  $0 create-ns my-app"
+    echo "  $0 create-dev-env development"
+    echo "  $0 create-database-env databases"
+    echo "  $0 create-messaging-env messaging"
+    echo "  $0 create-vector-env vectordb"
+    echo "  $0 enable-monitoring"
+    echo "  $0 generate-manifests webapp development"
     echo "  $0 deploy app.yaml"
+    echo "  $0 enable-ingress"
+    echo "  $0 create-ingress my-ingress app.local my-service:80 default"
+    echo "  $0 load-test http://app.local 1000 50"
     echo "  $0 scale my-deployment 3 my-namespace"
-    echo "  $0 logs my-pod default follow"
-    echo "  $0 port-forward my-service 8080:80"
+    echo "  $0 monitor-resources development"
+    echo "  $0 backup-namespace production"
 }
 
 # Main function
@@ -411,6 +458,72 @@ main() {
             ;;
         port-forward)
             port_forward "$2" "$3" "$4"
+            ;;
+        enable-monitoring)
+            enable_monitoring
+            ;;
+        enable-istio)
+            enable_istio
+            ;;
+        setup-registry)
+            setup_registry
+            ;;
+        create-dev-env)
+            create_dev_env "$2"
+            ;;
+        create-database-env)
+            create_database_env "$2"
+            ;;
+        create-messaging-env)
+            create_messaging_env "$2"
+            ;;
+        create-vector-env)
+            create_vector_env "$2"
+            ;;
+        load-test)
+            load_test "$2" "$3" "$4"
+            ;;
+        monitor-resources)
+            monitor_resources "$2"
+            ;;
+        enable-chaos)
+            enable_chaos
+            ;;
+        create-network-policies)
+            create_network_policies "$2"
+            ;;
+        generate-manifests)
+            generate_manifests "$2" "$3"
+            ;;
+        backup-namespace)
+            backup_namespace "$2"
+            ;;
+        enable-dashboard)
+            enable_dashboard
+            ;;
+        enable-ingress)
+            enable_ingress
+            ;;
+        disable-ingress)
+            disable_ingress
+            ;;
+        create-ingress)
+            create_ingress "$2" "$3" "$4" "$5" "$6"
+            ;;
+        create-tls-ingress)
+            create_tls_ingress "$2" "$3" "$4" "$5"
+            ;;
+        delete-ingress)
+            delete_ingress "$2" "$3"
+            ;;
+        list-ingress)
+            list_ingress "$2"
+            ;;
+        describe-ingress)
+            describe_ingress "$2" "$3"
+            ;;
+        test-ingress)
+            test_ingress "$2" "$3" "$4"
             ;;
         enable-dashboard)
             enable_dashboard
