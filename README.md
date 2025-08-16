@@ -6,853 +6,421 @@ A comprehensive, modular Kubernetes local development environment manager that p
 
 ### Interactive Menu System
 - **User-friendly interface**: Navigate through organized categories
-- **Guided workflows**: Step-by-step prompts for all operations
+- **Guided workflows**: Step-by-step prompts for all operations  
 - **Quick setup wizards**: Pre-configured environments for different use cases
 
 ### Modular Architecture
-- **Cluster Management**: Start, stop, configure, and maintain your local K8s cluster
-- **Development Environments**: Pre-built setups for databases, messaging, vector DBs
-- **Application Management**: Deploy, scale, monitor applications
-- **Networking & Ingress**: Complete ingress management with TLS support
-- **Monitoring & Debugging**: Built-in monitoring, chaos engineering, load testing
-- **Utilities & Tools**: Manifest generation, backups, and maintenance tools
+- **21 Pre-built Components**: Storage, databases, messaging, search, monitoring
+- **Quick Setup Wizards**: Complete environments in one command
+- **Individual Deployment**: Deploy any component independently
+- **Advanced Features**: Service mesh, monitoring, chaos engineering
 
-### Quick Setup Wizards
-1. **Complete Development**: Full-featured development environment
-2. **Microservices**: Service mesh, registry, messaging
-3. **Data Engineering**: Databases, messaging, vector stores
-4. **AI/ML**: Vector databases and ML-ready environment
-5. **Web Application**: Frontend-optimized setup with ingress
+### Component Categories
+- **Storage & Caching** (4): Redis, Memcached, Hazelcast, MinIO
+- **Databases** (5): PostgreSQL, MongoDB, MySQL, Cassandra, InfluxDB
+- **Messaging** (5): Kafka, RabbitMQ, ActiveMQ Artemis, Apache Pulsar, Zookeeper
+- **Vector & Search** (4): Weaviate, Qdrant, Elasticsearch, OpenSearch
+- **Monitoring** (3): Prometheus, Grafana, Istio
 
 ## 📋 Prerequisites
 
-The script will automatically install:
+The script automatically installs:
 - Docker
-- kubectl
-- minikube  
+- kubectl  
+- minikube
 - Helm
 - k9s (Kubernetes CLI manager)
 
+**System Requirements:**
+- Ubuntu Linux (18.04+)
+- 4GB RAM, 2 CPU cores (minimum)
+- Internet connection
+
 ## 🎯 Quick Start
 
-### Interactive Mode (Recommended)
+### 1. Installation
+```bash
+# Download and setup
+wget https://raw.githubusercontent.com/pandaind/oneclick-k8s-local/main/k8s_manager.sh
+chmod +x k8s_manager.sh
+
+# Install prerequisites and start
+./k8s_manager.sh install
+./k8s_manager.sh start
+```
+
+### 2. Interactive Mode (Recommended)
 ```bash
 ./k8s_manager.sh
 ```
 
-### Command Line Mode
-```bash
-./k8s_manager.sh <command> [arguments]
-```
-
-### Quick Wizards
+### 3. Quick Wizards
 ```bash
 ./k8s_manager.sh wizard-complete-dev    # Complete development setup
-./k8s_manager.sh wizard-microservices   # Microservices environment
+./k8s_manager.sh wizard-microservices   # Microservices environment  
 ./k8s_manager.sh wizard-data-eng        # Data engineering stack
 ./k8s_manager.sh wizard-aiml            # AI/ML development
 ./k8s_manager.sh wizard-webapp          # Web application setup
 ```
 
-## � Main Categories
+## 📦 Available Components
 
-### 1. Cluster Management
-- Install prerequisites
-- Start/stop/restart cluster
-- Cluster status and monitoring
-- Dashboard access
-- Configuration backup
+### Storage & Caching
+| Component | Command | Description | Access |
+|-----------|---------|-------------|--------|
+| **Redis** | `deploy-redis` | In-memory cache & session store | `redis:6379` |
+| **Memcached** | `deploy-memcached` | High-performance caching system | `memcached:11211` |
+| **Hazelcast** | `deploy-hazelcast` | In-memory data grid | `hazelcast:5701` |
+| **MinIO** | `deploy-minio` | S3-compatible object storage | `minio:9000` |
 
-### 2. Development Environments
+### Databases  
+| Component | Command | Description | Access |
+|-----------|---------|-------------|--------|
+| **PostgreSQL** | `deploy-postgresql` | Advanced relational database | `postgres:5432` |
+| **MongoDB** | `deploy-mongodb` | Document database | `mongodb:27017` |
+| **MySQL** | `deploy-mysql` | Popular relational database | `mysql:3306` |
+| **Cassandra** | `deploy-cassandra` | Wide-column NoSQL database | `cassandra:9042` |
+| **InfluxDB** | `deploy-influxdb` | Time-series database | `influxdb:8086` |
 
-Choose from individual components or pre-configured environments:
+### Messaging Systems
+| Component | Command | Description | Access |
+|-----------|---------|-------------|--------|
+| **Apache Kafka** | `deploy-kafka` | Event streaming platform | `kafka:9092` |
+| **RabbitMQ** | `deploy-rabbitmq` | Feature-rich message broker | `rabbitmq:5672` |
+| **ActiveMQ Artemis** | `deploy-artemis` | Enterprise messaging | `artemis:61616` |
+| **Apache Pulsar** | `deploy-pulsar` | Cloud-native pub-sub | `pulsar:6650` |
+| **Zookeeper** | `deploy-zookeeper` | Distributed coordination | `zookeeper:2181` |
 
-**Storage & Caching:**
-- **Redis**: In-memory cache
-- **Memcached**: High-performance caching  
-- **Hazelcast**: In-memory data grid
-- **MinIO**: S3-compatible object storage
+### Vector & Search Engines
+| Component | Command | Description | Access |
+|-----------|---------|-------------|--------|
+| **Weaviate** | `deploy-weaviate` | AI-native vector database | `weaviate:8080` |
+| **Qdrant** | `deploy-qdrant` | High-performance vector search | `qdrant:6333` |
+| **Elasticsearch** | `deploy-elasticsearch` | Search and analytics engine | `elasticsearch:9200` |
+| **OpenSearch** | `deploy-opensearch` | Open-source search platform | `opensearch:9200` |
 
-**Databases:**
-- **PostgreSQL**: Relational database
-- **MongoDB**: Document database
-- **MySQL**: Relational database
-- **Cassandra**: Wide-column database
-- **InfluxDB**: Time-series database
+### Monitoring & Infrastructure
+| Component | Command | Description | Access |
+|-----------|---------|-------------|--------|
+| **Prometheus** | `deploy-prometheus` | Metrics collection system | Multiple ports |
+| **Grafana** | `deploy-grafana` | Visualization dashboards | Web UI |
+| **Istio** | `enable-istio` | Service mesh platform | Multiple components |
 
-**Messaging Systems:**
-- **Apache Kafka**: Event streaming platform
-- **RabbitMQ**: Message broker
-- **ActiveMQ Artemis**: Enterprise message broker
-- **Apache Pulsar**: Pub-sub messaging platform
-- **Zookeeper**: Coordination service
+## 🛠️ Usage Examples
 
-**Vector & Search:**
-- **Weaviate**: Vector database
-- **Qdrant**: Vector search engine
-- **Elasticsearch**: Search and analytics
-- **OpenSearch**: Open-source search and analytics
-
-### 3. Application Management
-- Deploy applications from YAML
-- Generate sample manifests
-- Scale deployments
-- View resources and logs
-- Pod execution and port forwarding
-
-### 4. Networking & Ingress
-- Enable/disable ingress controller
-- Create HTTP/HTTPS ingress resources
-- TLS certificate management
-- Network policies
-- Connectivity testing
-
-### 5. Monitoring & Debugging
-- Prometheus & Grafana monitoring stack
-- Istio service mesh
-- Chaos engineering (Chaos Mesh)
-- Real-time resource monitoring
-- Load testing tools
-
-### 6. Utilities & Tools
-- Kubernetes manifest generators
-- Namespace and cluster backups
-- Local Docker registry
-- Network security policies
-
-## 📖 Usage Examples
-
-### Interactive Mode
+### Cluster Management
 ```bash
-./k8s_manager.sh
-# Follow the menu-driven interface
-```
-
-### Command Line Examples
-```bash
-# Quick complete setup
-./k8s_manager.sh wizard-complete-dev
-
-# Manual cluster operations
+# Basic cluster operations
 ./k8s_manager.sh start
 ./k8s_manager.sh status
+./k8s_manager.sh stop
+./k8s_manager.sh restart
+```
 
-# Create individual components
+### Individual Component Deployment
+```bash
+# Deploy individual components
 ./k8s_manager.sh deploy-redis development
-./k8s_manager.sh deploy-postgresql databases  
+./k8s_manager.sh deploy-postgresql databases
 ./k8s_manager.sh deploy-artemis messaging
 ./k8s_manager.sh deploy-weaviate vectordb
-./k8s_manager.sh deploy-memcached caching
-./k8s_manager.sh deploy-influxdb timeseries
+```
 
-# Application management
-./k8s_manager.sh generate-manifests webapp development
-./k8s_manager.sh deploy ./manifests-webapp/
+### Pre-configured Environments
+```bash
+# Basic development (Redis, PostgreSQL, MinIO)
+./k8s_manager.sh create-dev-env development
 
-# Ingress management
+# Extended databases (MongoDB, MySQL, Cassandra, InfluxDB)
+./k8s_manager.sh create-database-env databases
+
+# Messaging systems (Kafka, RabbitMQ, Artemis, Pulsar, Zookeeper)
+./k8s_manager.sh create-messaging-env messaging
+
+# Vector & search engines (Weaviate, Qdrant, Elasticsearch, OpenSearch)
+./k8s_manager.sh create-vector-env vectordb
+```
+
+### Application Management
+```bash
+# Generate Kubernetes manifests
+./k8s_manager.sh generate-manifests myapp development
+
+# Deploy from YAML
+./k8s_manager.sh deploy ./manifests-myapp/
+
+# Scale applications
+./k8s_manager.sh scale my-deployment 5 development
+```
+
+### Networking & Ingress
+```bash
+# Enable ingress controller
 ./k8s_manager.sh enable-ingress
-./k8s_manager.sh create-ingress my-app app.local my-service:80
 
-# Monitoring
+# Create ingress rules
+./k8s_manager.sh create-ingress myapp app.local myapp-service:80
+./k8s_manager.sh create-tls-ingress secure-app secure.local myapp-service:80
+```
+
+### Monitoring & Advanced Features
+```bash
+# Enable monitoring stack (Prometheus + Grafana)
 ./k8s_manager.sh enable-monitoring
-./k8s_manager.sh monitor-resources development
+
+# Service mesh (Istio)
+./k8s_manager.sh enable-istio
 
 # Load testing
 ./k8s_manager.sh load-test http://app.local 1000 50
+
+# Chaos engineering
+./k8s_manager.sh enable-chaos
 ```
 
-## 🎛️ Component Details
+## 🎬 Complete Workflow Example
 
-### Storage & Caching
-- **Redis**: In-memory data store and cache
-- **Memcached**: High-performance distributed caching system
-- **Hazelcast**: In-memory data grid with distributed computing
-- **MinIO**: S3-compatible object storage
-
-### Database Systems
-- **PostgreSQL**: Advanced relational database
-- **MongoDB**: Document-oriented database
-- **MySQL**: Popular relational database
-- **Cassandra**: Wide-column NoSQL database
-- **InfluxDB**: Time-series database optimized for metrics and events
-
-### Messaging Systems
-- **Apache Kafka**: Distributed event streaming platform
-- **RabbitMQ**: Feature-rich message broker
-- **ActiveMQ Artemis**: High-performance enterprise messaging
-- **Apache Pulsar**: Cloud-native pub-sub messaging
-- **Zookeeper**: Distributed coordination service
-
-### Vector & Search Engines
-- **Weaviate**: AI-native vector database
-- **Qdrant**: High-performance vector search engine
-- **Elasticsearch**: Distributed search and analytics engine
-- **OpenSearch**: Open-source search and analytics suite
-
-## 🛡️ Security Features
-- Network policies for pod isolation
-- TLS ingress with automatic certificate generation
-- Namespace-based resource isolation
-- RBAC-ready configurations
-
-## 🔧 Advanced Features
-- **Chaos Engineering**: Built-in chaos testing with Chaos Mesh
-- **Service Mesh**: Istio integration for advanced traffic management
-- **Monitoring Stack**: Complete observability with Prometheus & Grafana
-- **Load Testing**: Apache Bench integration for performance testing
-
-## 📁 File Organization
-After running, the script creates:
-- `~/k8s-backups/`: Cluster and namespace backups
-- `./manifests-*/`: Generated Kubernetes manifests
-- Local registry and development data
-
-## 🚨 Important Notes
-- **Minikube Driver**: Uses Docker by default (configurable)
-- **Resource Requirements**: 2 CPUs, 2GB RAM minimum for minikube
-- **Port Conflicts**: Check for port conflicts if services don't start
-- **Cleanup**: Use delete commands to clean up resources when done
-
-## 🆘 Troubleshooting
-- Run `./k8s_manager.sh status` to check cluster health
-- Use `./k8s_manager.sh logs <pod-name>` for debugging
-- Monitor resources with `./k8s_manager.sh monitor-resources`
-- Access dashboard with `./k8s_manager.sh dashboard`
-
-## 🔄 Migration from v1.0
-The new version is fully backward compatible. All previous commands work, plus:
-- New interactive interface (default when no arguments)
-- Quick setup wizards
-- Enhanced error handling and user guidance
-- Organized menu system
-
----
-
-**Happy Kubernetes Development!** 🎉
-- **Namespace management**: Create and delete namespaces easily
-
-### **Development & Testing Environment**
-- **Complete dev stack**: Redis, PostgreSQL, MinIO (S3-compatible storage)
-- **Local container registry**: Push and pull custom images locally
-- **Manifest generation**: Auto-generate production-ready Kubernetes manifests
-- **Load testing**: Built-in performance testing with configurable parameters
-
-### **Monitoring & Observability**
-- **Full monitoring stack**: Prometheus + Grafana + AlertManager
-- **Real-time monitoring**: Live resource usage tracking
-- **Service mesh observability**: Istio with Kiali, Jaeger tracing
-- **Dashboard access**: Kubernetes dashboard with metrics
-
-### **Networking & Security**
-- **Ingress management**: HTTP/HTTPS ingress with automatic SSL certificates
-- **Network policies**: Security policies for network isolation
-- **Service mesh**: Istio for advanced traffic management and security
-
-### **Advanced Testing**
-- **Chaos engineering**: Chaos Mesh for failure injection testing
-- **Performance testing**: Comprehensive load testing capabilities
-- **Auto-scaling**: HPA (Horizontal Pod Autoscaler) configurations
-
-### **Backup & Recovery**
-- **Namespace backup**: Complete backup with automated restore scripts
-- **Cluster configuration backup**: Full cluster state preservation
-- **Disaster recovery**: Quick restoration capabilities
-
-## 📋 Prerequisites
-
-- Ubuntu Linux (18.04 or later)
-- Internet connection for downloading components
-- Sudo privileges for installation
-- At least 4GB RAM and 2 CPU cores recommended
-
-## 🔧 Installation
-
-1. **Clone or download the script**:
-   ```bash
-   wget https://raw.githubusercontent.com/pandaind/oneclick-k8s-local/main/k8s_manager.sh
-   # OR
-   curl -O https://raw.githubusercontent.com/pandaind/oneclick-k8s-local/main/k8s_manager.sh
-   ```
-
-2. **Make it executable and install globally**:
-   ```bash
-   chmod +x k8s_manager.sh
-   sudo cp k8s_manager.sh /usr/local/bin/k8s
-   ```
-
-3. **Install prerequisites**:
-   ```bash
-   k8s install
-   ```
-   > **Note**: You may need to logout and login again after installation for Docker group changes to take effect.
-
-## 📖 Usage
-
-### Cluster Management
-
-```bash
-# Start the Kubernetes cluster
-k8s start
-
-# Check cluster status
-k8s status
-
-# Stop the cluster
-k8s stop
-
-# Restart the cluster
-k8s restart
-
-# Delete the entire cluster (with confirmation)
-k8s delete
-```
-
-### Development Environment Setup
-
-```bash
-# Create complete development environment
-k8s create-dev-env development
-
-# Setup local Docker registry
-k8s setup-registry
-
-# Enable monitoring stack (Prometheus + Grafana)
-k8s enable-monitoring
-
-# Enable service mesh (Istio)
-k8s enable-istio
-
-# Enable ingress controller
-k8s enable-ingress
-```
-
-### Application Development
-
-```bash
-# Generate sample Kubernetes manifests
-k8s generate-manifests webapp development
-
-# Deploy application from YAML file
-k8s deploy app.yaml
-
-# Scale applications
-k8s scale my-deployment 5 development
-
-# Create ingress for external access
-k8s create-ingress webapp-ingress webapp.local webapp-service:80 development
-
-# Create TLS ingress with self-signed certificate
-k8s create-tls-ingress secure-app secure.local webapp-service:80 development
-```
-
-### Testing & Performance
-
-```bash
-# Run load tests
-k8s load-test http://webapp.local 1000 50
-
-# Monitor resources in real-time
-k8s monitor-resources development
-
-# Enable chaos engineering
-k8s enable-chaos
-
-# Test ingress connectivity
-k8s test-ingress webapp.local
-```
-
-### Debugging & Troubleshooting
-
-```bash
-# View pod logs
-k8s logs webapp-pod-123 development
-
-# Follow logs in real-time
-k8s logs webapp-pod-123 development follow
-
-# Execute commands in pods
-k8s exec webapp-pod-123 development bash
-
-# Port forward services
-k8s port-forward webapp-service 8080:80 development
-```
-
-### Security & Network Management
-
-```bash
-# Create network policies for security
-k8s create-network-policies development
-
-# List and manage ingress resources
-k8s list-ingress development
-k8s describe-ingress webapp-ingress development
-k8s delete-ingress webapp-ingress development
-```
-
-### Backup & Recovery
-
-```bash
-# Backup entire namespace
-k8s backup-namespace development
-
-# Backup cluster configuration
-k8s backup
-```
-
-## 🎯 Complete Development Workflow
-
-Here's a comprehensive example from setup to production-ready testing:
+Here's a complete development workflow from setup to production-ready testing:
 
 ```bash
 # 1. Initial setup
-k8s install
-k8s start
+./k8s_manager.sh install
+./k8s_manager.sh start
 
 # 2. Enable advanced features
-k8s enable-monitoring
-k8s enable-istio
-k8s enable-ingress
-k8s setup-registry
+./k8s_manager.sh enable-monitoring
+./k8s_manager.sh enable-ingress
 
-# 3. Create development environment
-k8s create-dev-env development
+# 3. Create complete development environment
+./k8s_manager.sh wizard-complete-dev
 
-# 4. Generate and customize application manifests
-k8s generate-manifests webapp development
-cd k8s-manifests-webapp
-# Edit manifests as needed
+# 4. Deploy your application
+./k8s_manager.sh generate-manifests webapp development
+cd manifests-webapp
 ./deploy.sh
 
 # 5. Setup external access
-k8s create-ingress webapp-ingress webapp.local webapp-service:80 development
+./k8s_manager.sh create-ingress webapp-ingress webapp.local webapp-service:80
 
-# 6. Performance and chaos testing
-k8s load-test http://webapp.local 2000 100
-k8s enable-chaos
+# 6. Performance testing
+./k8s_manager.sh load-test http://webapp.local 1000 50
 
 # 7. Monitor and debug
-k8s monitor-resources development
-k8s logs webapp-pod-xyz development follow
-
-# 8. Security testing
-k8s create-network-policies development
-
-# 9. Backup before changes
-k8s backup-namespace development
+./k8s_manager.sh monitor-resources development
+./k8s_manager.sh logs webapp-pod-xyz development
 ```
 
-## 🏗️ Development Environment Components
+## 🎛️ Interactive Menu Navigation
 
-When you run `k8s create-dev-env`, you get:
+When you run `./k8s_manager.sh` without arguments, you get an organized menu system:
 
-### **Database Services**
+```
+1. Cluster Management
+   - Start/stop/restart cluster
+   - Status and health checks
+   - Prerequisites installation
 
-- **PostgreSQL**: Full-featured database
-  - Host: `postgres:5432`
-  - Database: `devdb`
-  - User: `devuser`
-  - Password: `devpass`
+2. Development Environments  
+   - Individual components (18 deployable components)
+   - Pre-configured environments (4 options)
+   - Quick setup wizards (5 options)
 
-### **Caching & Storage**
+3. Application Management
+   - Deploy applications
+   - Generate manifests
+   - Scale and manage
 
-- **Redis**: In-memory cache and session store
-  - Host: `redis:6379`
-- **MinIO**: S3-compatible object storage
-  - API: `minio:9000`
-  - Console: `http://$(minikube ip):32001`
-  - Credentials: `minioadmin:minioadmin`
+4. Networking & Ingress
+   - Ingress management
+   - Network policies
+   - TLS certificates
 
-------
+5. Monitoring & Debugging
+   - Resource monitoring (3 monitoring tools)
+   - Service mesh
+   - Load testing
 
-## 🆕 Extended Messaging & Vector/AI Database Environments
-
-### **Messaging Systems**
-
-✅ **RabbitMQ** with Management Console
-
-- **AMQP**: `rabbitmq:5672`
-- **Management UI**: `http://$(minikube ip):32672`
-- **User**: `admin`
-- **Password**: `password123`
-
-✅ **ActiveMQ** with Web Console
-
-- **OpenWire**: `activemq:61616`
-- **Web Console**: `http://$(minikube ip):32161`
-- **User**: `admin`
-- **Password**: `password123`
-
-------
-
-### **Vector & Advanced Databases for AI/ML**
-
-Command:
-
-```bash
-k8s create-vector-env [namespace]
+6. Utilities & Tools
+   - Backups
+   - Security policies
+   - Troubleshooting
 ```
 
-Deploys a complete **AI/ML-ready vector database stack**:
+## 🔧 Service Access Information
 
-✅ **Weaviate** – Vector database for AI applications
+After deployment, services are accessible via:
 
-- Host: `weaviate:8080`
-- Web UI: `http://$(minikube ip):32080`
-- Features: `text2vec`, transformers support
+### Internal Cluster Access
+All services use their service names (e.g., `redis:6379`, `postgres:5432`)
 
-✅ **Chroma** – Embedding database
+### External Access (via NodePort)
+- **MinIO Console**: `http://$(minikube ip):32001`
+- **RabbitMQ Management**: `http://$(minikube ip):32672` 
+- **Artemis Console**: `http://$(minikube ip):32161`
+- **Weaviate UI**: `http://$(minikube ip):32080`
+- **Qdrant UI**: `http://$(minikube ip):32333`
 
-- Host: `chroma:8000`
-- Persistent storage enabled
-
-✅ **Qdrant** – High-performance vector database
-
-- HTTP API: `qdrant:6333`
-- gRPC: `qdrant:6334`
-- Web UI: `http://$(minikube ip):32333`
-
-✅ **Elasticsearch** – Search & analytics engine
-
-- Host: `elasticsearch:9200`
-- Web Interface: `http://$(minikube ip):32200`
-- Security disabled for development
-
-------
-
-### 📊 **Environment Setup Commands**
-
-```bash
-# Basic development stack
-k8s create-dev-env development        # Redis, PostgreSQL, MinIO
-
-# Extended database stack
-k8s create-database-env databases     # MongoDB, MySQL, Cassandra, Neo4j
-
-# Messaging systems
-k8s create-messaging-env messaging    # Kafka, RabbitMQ, ActiveMQ
-
-# AI/ML vector database stack
-k8s create-vector-env vectordb        # Weaviate, Chroma, Qdrant, Elasticsearch
-```
-
-------
-
-## 📊 Monitoring & Observability
-
-### **Prometheus + Grafana Stack**
-```bash
-k8s enable-monitoring
-
-# Access points:
-# Grafana: http://$(minikube ip):[NodePort]
-# Username: admin, Password: admin123
-# Prometheus: http://$(minikube ip):[NodePort]
-```
-
-### **Istio Service Mesh**
-```bash
-k8s enable-istio
-
-# Access Kiali dashboard:
-istioctl dashboard kiali
-
-# Features included:
-# - Traffic management
-# - Security policies
-# - Distributed tracing (Jaeger)
-# - Service mesh visualization
-```
-
-## 🧪 Testing Capabilities
-
-### **Load Testing**
-```bash
-# Basic load test
-k8s load-test http://webapp.local
-
-# Advanced load test
-k8s load-test http://webapp.local 5000 200
-
-# Parameters: URL, total requests, concurrent requests
-```
-
-### **Chaos Engineering**
-```bash
-k8s enable-chaos
-
-# Access Chaos Dashboard:
-kubectl port-forward -n chaos-testing svc/chaos-dashboard 2333:2333
-# Then visit: http://localhost:2333
-```
-
-## 📁 Generated Manifest Examples
-
-The `k8s generate-manifests` command creates:
-
-### **Deployment with Best Practices**
-- Resource limits and requests
-- Liveness and readiness probes
-- Rolling update strategy
-- Security context
-
-### **Complete Service Stack**
-- ClusterIP service
-- Ingress with SSL/TLS support
-- ConfigMap for configuration
-- Secret for sensitive data
-- HPA for auto-scaling
-
-### **Ready-to-Use Scripts**
-- `deploy.sh` - One-click deployment
-- `restore.sh` - Automated backup restoration
+### Default Credentials
+| Service | Username | Password |
+|---------|----------|----------|
+| MinIO | `minioadmin` | `minioadmin` |
+| PostgreSQL | `devuser` | `devpass` |
+| MongoDB | `admin` | `password123` |
+| MySQL | `devuser` | `devpass123` |
+| RabbitMQ | `admin` | `password123` |
+| Artemis | `admin` | `password123` |
 
 ## 🛡️ Security Features
 
-### **Network Policies**
-```bash
-k8s create-network-policies development
+- **Network Policies**: Pod isolation and security
+- **TLS Ingress**: Automatic SSL certificate generation
+- **Namespace Isolation**: Resource separation
+- **RBAC Ready**: Role-based access control configurations
 
-# Creates policies for:
-# - Default deny ingress traffic
-# - Allow same-namespace communication
-# - Allow ingress controller access
+## 🧪 Testing & Debugging
+
+### Built-in Testing Tools
+```bash
+# Load testing with Apache Bench
+./k8s_manager.sh load-test http://app.local 2000 100
+
+# Chaos engineering
+./k8s_manager.sh enable-chaos
+
+# Real-time monitoring
+./k8s_manager.sh monitor-resources development
 ```
 
-### **TLS/SSL Support**
+### Debugging Commands
 ```bash
-# Create HTTPS ingress with self-signed certificate
-k8s create-tls-ingress secure-app secure.local webapp-service:80 development
+# View logs
+./k8s_manager.sh logs pod-name development
+
+# Execute in pods
+./k8s_manager.sh exec pod-name development bash
+
+# Port forwarding
+./k8s_manager.sh port-forward service-name 8080:80 development
 ```
 
-## 📊 Commands *Reference*
+## 🔄 Backup & Recovery
 
-| Category        | Command                               | Description                                                  | Example                                       |
-| --------------- | ------------------------------------- | ------------------------------------------------------------ | --------------------------------------------- |
-| **Setup**       | `install`                             | Install all prerequisites                                    | `k8s install`                                 |
-|                 | `start`                               | Start cluster                                                | `k8s start`                                   |
-|                 | `stop`                                | Stop cluster                                                 | `k8s stop`                                    |
-|                 | `status`                              | Show cluster status                                          | `k8s status`                                  |
-| **Development** | `create-dev-env <ns>`                 | Create dev environment                                       | `k8s create-dev-env dev`                      |
-|                 | `create-database-env <ns>`            | Create extended database env                                 | `k8s create-database-env databases`           |
-|                 | `create-messaging-env <ns>`           | Create messaging env (Kafka, RabbitMQ, ActiveMQ)             | `k8s create-messaging-env messaging`          |
-|                 | `create-vector-env <ns>`              | Create AI/ML vector DB env (Weaviate, Chroma, Qdrant, Elasticsearch) | `k8s create-vector-env vectordb`              |
-|                 | `setup-registry`                      | Local Docker registry                                        | `k8s setup-registry`                          |
-|                 | `generate-manifests <n> <ns>`         | Generate K8s manifests                                       | `k8s generate-manifests app dev`              |
-| **Monitoring**  | `enable-monitoring`                   | Install monitoring stack                                     | `k8s enable-monitoring`                       |
-|                 | `monitor-resources <ns>`              | Real-time monitoring                                         | `k8s monitor-resources dev`                   |
-|                 | `enable-istio`                        | Install service mesh                                         | `k8s enable-istio`                            |
-| **Testing**     | `load-test <url> <req> <conc>`        | Performance testing                                          | `k8s load-test http://app.local 1000 50`      |
-|                 | `enable-chaos`                        | Chaos engineering                                            | `k8s enable-chaos`                            |
-| **Ingress**     | `enable-ingress`                      | Enable ingress controller                                    | `k8s enable-ingress`                          |
-|                 | `create-ingress <n> <host> <svc>`     | Create ingress                                               | `k8s create-ingress app app.local svc:80`     |
-|                 | `create-tls-ingress <n> <host> <svc>` | Create HTTPS ingress                                         | `k8s create-tls-ingress app app.local svc:80` |
-|                 | `test-ingress <host>`                 | Test connectivity                                            | `k8s test-ingress app.local`                  |
-| **Apps**        | `deploy <file>`                       | Deploy from YAML                                             | `k8s deploy app.yaml`                         |
-|                 | `scale <dep> <n> <ns>`                | Scale deployment                                             | `k8s scale web 5 dev`                         |
-|                 | `get-all <ns>`                        | List all resources                                           | `k8s get-all dev`                             |
-| **Debug**       | `logs <pod> <ns> [follow]`            | View logs                                                    | `k8s logs web-123 dev follow`                 |
-|                 | `exec <pod> <ns> [cmd]`               | Execute in pod                                               | `k8s exec web-123 dev bash`                   |
-|                 | `port-forward <svc> <ports> <ns>`     | Port forward                                                 | `k8s port-forward web 8080:80 dev`            |
-| **Security**    | `create-network-policies <ns>`        | Create network policies                                      | `k8s create-network-policies dev`             |
-| **Backup**      | `backup-namespace <ns>`               | Backup namespace                                             | `k8s backup-namespace prod`                   |
-|                 | `backup`                              | Backup cluster                                               | `k8s backup`                                  |
+```bash
+# Backup namespace
+./k8s_manager.sh backup-namespace development
 
-------
+# Backup entire cluster
+./k8s_manager.sh backup
+```
 
-## 📡 Service Access URLs
+Backups are stored in `~/k8s-backups/` with automated restore scripts.
 
-| Service                                                                                         | Host / API                         | Web UI / Console                                   | Credentials               | 🧪 Test Command                                                                                        |
-| ----------------------------------------------------------------------------------------------- | ---------------------------------- | -------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [**PostgreSQL**](https://www.postgresql.org/docs/)                                              | `postgres:5432`                    | –                                                  | `devuser / devpass`       | `kubectl exec -it deploy/postgres -- psql -U devuser -c '\l'`                                          |
-| [**Redis**](https://redis.io/docs/)                                                             | `redis:6379`                       | –                                                  | –                         | `kubectl exec -it deploy/redis -- redis-cli PING`                                                      |
-| [**MinIO**](https://min.io/docs/minio/linux/index.html)                                         | `minio:9000`                       | [Web Console](http://$%28minikube%20ip%29:32001)   | `minioadmin / minioadmin` | `kubectl exec -it deploy/minio -- mc alias set local http://localhost:9000 minioadmin minioadmin`      |
-| [**MongoDB**](https://www.mongodb.com/docs/)                                                    | `mongodb:27017`                    | –                                                  | `admin / password123`     | `kubectl exec -it deploy/mongodb -- mongosh -u admin -p password123 --eval 'db.stats()'`               |
-| [**MySQL**](https://dev.mysql.com/doc/)                                                         | `mysql:3306`                       | –                                                  | `devuser / devpass123`    | `kubectl exec -it deploy/mysql -- mysql -u devuser -pdevpass123 -e "SHOW DATABASES;"`                  |
-| [**Cassandra**](https://cassandra.apache.org/doc/latest/)                                       | `cassandra:9042`                   | –                                                  | –                         | `kubectl exec -it deploy/cassandra -- cqlsh -e "DESCRIBE KEYSPACES;"`                                  |
-| [**Neo4j**](https://neo4j.com/docs/)                                                            | `neo4j:7687`                       | [Browser](http://$%28minikube%20ip%29:32474)       | `neo4j / password123`     | `kubectl exec -it deploy/neo4j -- cypher-shell -u neo4j -p password123 "MATCH (n) RETURN count(n);"`   |
-| [**Kafka**](https://kafka.apache.org/documentation/)                                            | `kafka:9092`                       | –                                                  | –                         | `kubectl exec -it deploy/kafka -- kafka-topics.sh --bootstrap-server localhost:9092 --list`            |
-| [**RabbitMQ**](https://www.rabbitmq.com/docs)                                                   | `rabbitmq:5672`                    | [Management UI](http://$%28minikube%20ip%29:32672) | `admin / password123`     | `kubectl exec -it deploy/rabbitmq -- rabbitmqctl list_queues`                                          |
-| [**ActiveMQ**](https://activemq.apache.org/components/classic/documentation)                    | `activemq:61616`                   | [Web Console](http://$%28minikube%20ip%29:32161)   | `admin / password123`     | `kubectl exec -it deploy/activemq -- curl -u admin:password123 http://localhost:8161/admin/queues.jsp` |
-| [**Weaviate**](https://weaviate.io/developers/weaviate)                                         | `weaviate:8080`                    | [Web UI](http://$%28minikube%20ip%29:32080)        | –                         | `kubectl exec -it deploy/weaviate -- curl http://localhost:8080/v1/meta`                               |
-| [**Chroma**](https://docs.trychroma.com/)                                                       | `chroma:8000`                      | –                                                  | –                         | `kubectl exec -it deploy/chroma -- curl http://localhost:8000/api/v1/collections`                      |
-| [**Qdrant**](https://qdrant.tech/documentation/)                                                | `qdrant:6333 (HTTP) / 6334 (gRPC)` | [Web UI](http://$%28minikube%20ip%29:32333)        | –                         | `kubectl exec -it deploy/qdrant -- curl http://localhost:6333/collections`                             |
-| [**Elasticsearch**](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html) | `elasticsearch:9200`               | [Web UI](http://$%28minikube%20ip%29:32200)        | –                         | `kubectl exec -it deploy/elasticsearch -- curl http://localhost:9200/_cluster/health?pretty`           |
-
----
-
-## 🔍 Troubleshooting
+## 🆘 Troubleshooting
 
 ### Common Issues
 
-1. **Docker permission denied**:
+1. **Docker Permission Denied**
    ```bash
    sudo usermod -aG docker $USER
-   # Then logout and login again
+   # Logout and login again
    ```
 
-2. **Minikube won't start**:
+2. **Minikube Won't Start**
    ```bash
-   k8s delete  # Delete existing cluster
-   k8s start   # Start fresh
+   ./k8s_manager.sh delete
+   ./k8s_manager.sh start
    ```
 
-3. **Resource constraints**:
+3. **Resource Constraints**
    ```bash
-   # Increase minikube resources
-   minikube config set memory 4096
-   minikube config set cpus 2
-   k8s restart
+   minikube config set memory 8192
+   minikube config set cpus 4
+   ./k8s_manager.sh restart
    ```
 
-4. **Ingress not accessible**:
+4. **Ingress Not Accessible**
    ```bash
    # Check ingress controller
    kubectl get pods -n ingress-nginx
    
-   # Test connectivity
-   k8s test-ingress your-host.local
-   
-   # Verify /etc/hosts entry
-   echo "$(minikube ip) your-host.local" | sudo tee -a /etc/hosts
+   # Add to /etc/hosts
+   echo "$(minikube ip) app.local" | sudo tee -a /etc/hosts
    ```
 
-5. **Monitoring not working**:
-   ```bash
-   # Check monitoring namespace
-   kubectl get pods -n monitoring
-   
-   # Reinstall if needed
-   helm uninstall prometheus -n monitoring
-   k8s enable-monitoring
-   ```
+### Getting Help
 
-### Performance Optimization
-
-- **Increase minikube resources** for better performance:
-  ```bash
-  minikube config set memory 8192
-  minikube config set cpus 4
-  ```
-
-- **Use SSD storage** for better I/O performance
-
-- **Enable feature gates** for advanced Kubernetes features:
-  ```bash
-  minikube start --feature-gates="EphemeralContainers=true"
-  ```
-
-## 🎨 Advanced Usage Examples
-
-### **Microservices Testing Setup**
 ```bash
-# Setup complete microservices environment
-k8s start
-k8s enable-istio
-k8s enable-monitoring
-k8s create-dev-env microservices
+# Check cluster status
+./k8s_manager.sh status
 
-# Generate multiple services
-k8s generate-manifests user-service microservices
-k8s generate-manifests order-service microservices
-k8s generate-manifests payment-service microservices
+# View all available commands
+./k8s_manager.sh help
 
-# Deploy with ingress
-k8s create-ingress api-gateway api.local user-service:80 microservices
+# Access Kubernetes dashboard
+./k8s_manager.sh dashboard
 ```
 
-### **CI/CD Pipeline Testing**
-```bash
-# Setup registry and dev environment
-k8s setup-registry
-k8s create-dev-env ci-cd
+## 📊 Commands Reference
 
-# Build and push custom image
-docker build -t $(minikube ip):32000/myapp:v1.0 .
-docker push $(minikube ip):32000/myapp:v1.0
+### Core Commands
+| Command | Description | Example |
+|---------|-------------|---------|
+| `install` | Install prerequisites | `./k8s_manager.sh install` |
+| `start` | Start cluster | `./k8s_manager.sh start` |
+| `stop` | Stop cluster | `./k8s_manager.sh stop` |
+| `status` | Cluster status | `./k8s_manager.sh status` |
 
-# Deploy and test
-k8s deploy myapp.yaml
-k8s load-test http://myapp.local 1000 20
-```
+### Environment Setup
+| Command | Description | Example |
+|---------|-------------|---------|
+| `create-dev-env [ns]` | Basic dev environment | `./k8s_manager.sh create-dev-env dev` |
+| `create-database-env [ns]` | Extended databases | `./k8s_manager.sh create-database-env db` |
+| `create-messaging-env [ns]` | Messaging systems | `./k8s_manager.sh create-messaging-env msg` |
+| `create-vector-env [ns]` | Vector & search DBs | `./k8s_manager.sh create-vector-env ai` |
 
-### **Security Testing**
-```bash
-# Setup secure environment
-k8s create-network-policies production
-k8s create-tls-ingress secure-app secure.local webapp-service:443 production
+### Individual Components
+| Command | Description | Example |
+|---------|-------------|---------|
+| `deploy-redis [ns]` | Deploy Redis cache | `./k8s_manager.sh deploy-redis cache` |
+| `deploy-postgresql [ns]` | Deploy PostgreSQL | `./k8s_manager.sh deploy-postgresql db` |
+| `deploy-kafka [ns]` | Deploy Kafka | `./k8s_manager.sh deploy-kafka messaging` |
+| `deploy-weaviate [ns]` | Deploy Weaviate | `./k8s_manager.sh deploy-weaviate ai` |
 
-# Test security policies
-kubectl run test-pod --rm -it --image=busybox -- wget -qO- webapp-service
-```
+### Wizards
+| Command | Description | Example |
+|---------|-------------|---------|
+| `wizard-complete-dev` | Complete development | `./k8s_manager.sh wizard-complete-dev` |
+| `wizard-microservices` | Microservices setup | `./k8s_manager.sh wizard-microservices` |
+| `wizard-data-eng` | Data engineering | `./k8s_manager.sh wizard-data-eng` |
+| `wizard-aiml` | AI/ML development | `./k8s_manager.sh wizard-aiml` |
+| `wizard-webapp` | Web application | `./k8s_manager.sh wizard-webapp` |
+
+### Advanced Features
+| Command | Description | Example |
+|---------|-------------|---------|
+| `enable-monitoring` | Prometheus + Grafana | `./k8s_manager.sh enable-monitoring` |
+| `enable-istio` | Service mesh | `./k8s_manager.sh enable-istio` |
+| `enable-ingress` | Ingress controller | `./k8s_manager.sh enable-ingress` |
+| `load-test [url] [req] [conc]` | Performance testing | `./k8s_manager.sh load-test http://app.local 1000 50` |
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-### Development Setup
-
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes
-4. Test thoroughly with different scenarios
-5. Submit a pull request
-
-### Testing Your Changes
-
-```bash
-# Test basic functionality
-k8s install
-k8s start
-k8s create-dev-env test
-k8s generate-manifests test-app test
-k8s enable-monitoring
-
-# Test advanced features
-k8s enable-istio
-k8s load-test http://test-app.local
-k8s backup-namespace test
-```
+3. Test your changes thoroughly
+4. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- [Minikube](https://minikube.sigs.k8s.io/) - Local Kubernetes development
-- [kubectl](https://kubernetes.io/docs/reference/kubectl/) - Kubernetes command-line tool
-- [Docker](https://www.docker.com/) - Container platform
+- [Kubernetes](https://kubernetes.io/) - Container orchestration
+- [Minikube](https://minikube.sigs.k8s.io/) - Local Kubernetes
+- [Docker](https://www.docker.com/) - Container platform  
 - [Helm](https://helm.sh/) - Package manager for Kubernetes
-- [Prometheus](https://prometheus.io/) - Monitoring and alerting toolkit
-- [Grafana](https://grafana.com/) - Visualization and analytics platform
-- [Istio](https://istio.io/) - Service mesh platform
-- [Chaos Mesh](https://chaos-mesh.org/) - Chaos engineering platform
-- [k9s](https://k9scli.io/) - Kubernetes CLI manager
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [troubleshooting section](#-troubleshooting)
-2. Review the [commands reference](#-commands-reference)
-3. Open an issue in the repository
-4. Check individual tool documentation:
-   - [Kubernetes Documentation](https://kubernetes.io/docs/)
-   - [Minikube Documentation](https://minikube.sigs.k8s.io/docs/)
-   - [Istio Documentation](https://istio.io/latest/docs/)
-
-## 🚀 Roadmap
-
-Future enhancements planned:
-- ArgoCD for GitOps workflows
-- Tekton for CI/CD pipelines  
-- OPA (Open Policy Agent) for advanced policies
-- Linkerd as alternative service mesh
-- Multi-cluster support
-- Cloud provider integration
 
 ---
 
-**Happy Kubernetes development! 🎉**
-
-> This tool transforms your local machine into a production-grade Kubernetes development environment with enterprise-level capabilities.
+**Transform your local machine into a production-grade Kubernetes development environment! 🚀**
